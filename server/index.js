@@ -1,6 +1,14 @@
 const express = require("express");
 const app = express();
+const dotenv = require("dotenv");
+const database = require("./config/database");
 
-app.listen(3000, () => {
-    console.log("App is listerning on port 3000");
+// Connecting to database
+database.dbConnect();
+
+dotenv.config(); // parsing .env file variables
+
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
+    console.log(`App is listerning on port ${port}`);
 })
