@@ -18,11 +18,7 @@ const taskSchema = new mongoose.Schema({
         type: String,
         enum: ["In Progress", "Pending", "Completed"],
         require: true,
-    },
-    createdAt: {
-        type: Date,
-        require: true,
     }
-})
+}, {timestamps: true})
 
 module.exports = new mongoose.model("Task", taskSchema);
