@@ -18,6 +18,7 @@ const Task = () => {
     const [iSEditTitle, setIsEditTitle] = useState(false);
     const [editedTitle, setEditedTitle] = useState(task.title);
     const [editedDesc, setEditedDesc] = useState(task.description)
+    const [editedStatus, setEditedStatus] = useState(task.status);
 
     // Saving changes and keep track of chnage
     const [isUpdated, setIsUpdated] = useState(false);
@@ -30,9 +31,16 @@ const Task = () => {
         setEditedDesc(value);
     }
 
+    const handleEditStatus = (e) => {
+        setEditedStatus(e.target.value);
+    }
+
     useEffect(() => {
         // updating state when there is any updates in value
-        if(task.title !== editedTitle || task.description !== editedDesc){
+        if(task.title !== editedTitle 
+            || task.description !== editedDesc
+            || task.status !== editedStatus)
+        {
             // console.log("editedTitle", editedTitle);
             // console.log("editedDesc", editedDesc);
             setIsUpdated(true);
@@ -40,13 +48,14 @@ const Task = () => {
         else{
             setIsUpdated(false);
         }
-    }, [editedTitle, editedDesc])
+    }, [editedTitle, editedDesc, editedStatus])
 
 
     const handleClickCancel = () => {
         setIsEditTitle(false);
         setEditedTitle(task.title);
         setEditedDesc(task.description);
+        setEditedStatus(task.status);
         setIsUpdated(false);
     }
 
@@ -55,34 +64,57 @@ const Task = () => {
             ...task,
             title: editedTitle,
             description: editedDesc,
+            status: editedStatus,
         });
         setIsUpdated(false);
     }
 
   return (
     <div>
-        <div className='flex justify-center items-center gap-2'>
-            {iSEditTitle ? (
-                <div className='flex justify-center'>
-                    <input
-                        type='text'
-                        value={editedTitle}
-                        className='border-2 text-black'
-                        onChange={(e) => handleEditTitle(e)}
-                        onBlur={() => setIsEditTitle(false)}
-                        autoFocus
-                    />
-                </div>
-            ) : (
-                <div className='flex justify-center'>
-                    <h1
-                        onClick={() => setIsEditTitle(true)}
-                    >
-                        {editedTitle}
-                    </h1>
-                </div>
-            )}
-            <CiEdit onClick={() => setIsEditTitle(true)}/>
+        <div>
+            <div className='flex justify-center items-center gap-2'>
+                {iSEditTitle ? (
+                    <div className='flex justify-center'>
+                        <input
+                            type='text'
+                            value={editedTitle}
+                            className='border-2 text-black'
+                            onChange={(e) => handleEditTitle(e)}
+                            onBlur={() => setIsEditTitle(false)}
+                            autoFocus
+                            placeholder='Type the task name here...'
+                        />
+                    </div>
+                ) : (
+                    <div className='flex justify-center'>
+                        <h1
+                            onClick={() => setIsEditTitle(true)}
+                        >
+                            {editedTitle ? editedTitle : "Type the task name..."}
+                        </h1>
+                    </div>
+                )}
+                <CiEdit onClick={() => setIsEditTitle(true)}/>
+            </div>
+            
+            <div>
+                <label 
+                    htmlFor='status'
+                    className='bg-blue-300 p-1'
+                >
+                    Title Status
+                </label>
+                <select 
+                    id='status'
+                    value={editedStatus}
+                    onChange={(e) => handleEditStatus(e)}
+                    className='border-2 px-2 py-1'
+                >
+                    <option value="In Progress">In Progress</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
         </div>
 
         <div className='mt-10'>
