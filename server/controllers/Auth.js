@@ -33,6 +33,7 @@ exports.signup = async (req, res) => {
       password: hashedPassword,
     });
 
+    user.password = undefined;
 
     return res.status(200).json({
       success: true,
