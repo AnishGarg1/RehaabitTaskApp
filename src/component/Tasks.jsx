@@ -2,29 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { RiDeleteBin6Line } from "react-icons/ri"
 import { FiEdit2 } from "react-icons/fi";
 import { Link } from 'react-router-dom';
-
-const tasks = [
-  {
-      id: 1,
-      title: "Web Development Project",
-      description: "It is web dev project using MERN.It is web dev project using MERN.It is web dev project using MERN.It is web dev project using MERN.It is web dev project using MERN.",
-      status: "In Progress",
-  },
-  {
-      id: 2,
-      title: "Mern Stack Project",
-      description: "Mern stack project which is using razorpay have been made by me.Mern stack project which is using razorpay have been made by me.Mern stack project which is using razorpay have been made by me.",
-      status: "Pending",
-  },
-  {
-      id: 3,
-      title: "Create Documentation",
-      description: "Integrated javascript library having mutilple framework used in handing communication between frontend and backend.",
-      status: "Completed",
-  }
-]
+import { getAllTasks } from '../service/apiUtils/taskAPIs';
+import { useSelector } from 'react-redux';
 
 const Tasks = () => {
+  const { token } = useSelector((state) => state.auth);
+  let result = [];
+
   const [taskList, setTaskList] = useState([]);
   const [filter, setFilter] = useState("All");
   const [showMoreList, setShowMoreList] = useState([]);
@@ -36,18 +20,27 @@ const Tasks = () => {
     }));
   };
 
+
   const handleClickFilter = (filterType) => {
     setFilter(filterType);
     if(filterType === 'All'){
-      setTaskList(tasks);
+      setTaskList(result);
       return;
     }
-    const filteredTasks = tasks.filter((task) => task.status === filterType);
+    const filteredTasks = result.filter((task) => task.status === filterType);
     setTaskList(filteredTasks)
   }
 
   useEffect(() => {
-    setTaskList(tasks);
+    const fetchTaskList = async () => {
+      result = await getAllTasks(token);
+      
+      if(result) {
+        setTaskList(result);
+      }
+    }
+    
+    fetchTaskList();
   }, []);
   
   return (

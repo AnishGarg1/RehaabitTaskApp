@@ -1,10 +1,13 @@
 import React from 'react'
 import { BiTask } from "react-icons/bi"
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { logout } from '../service/apiUtils/authAPIs'
 
 const Navbar = () => {
     const { token } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     
   return (
     <div className='w-full flex justify-evenly'>
@@ -30,7 +33,11 @@ const Navbar = () => {
         {token ? (
             <div className='flex gap-2'>
                 <button>Dashboard</button>            
-                <button>logout</button>            
+                <button
+                    onClick={() => logout(dispatch, navigate)}
+                >
+                    Logout
+                </button>            
             </div>
         ): (
             <div className='flex gap-2'>

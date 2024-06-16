@@ -8,6 +8,7 @@ import Signup from './component/Auth/Signup';
 import Dashboard from './component/Dashboard';
 import OpenRoute from './component/Auth/OpenRoute';
 import Task from './component/Task';
+import PrivateRoute from './component/Auth/PrivateRoute';
 
 function App() {
   return (
@@ -28,17 +29,29 @@ function App() {
         
         <Route 
           path='/signup' 
-          element={<Signup/>}
+          element={
+            <OpenRoute>
+              <Signup/>
+            </OpenRoute>
+          }
         />
         
         <Route 
           path='/dashboard' 
-          element={<Dashboard/>}
+          element={
+            <PrivateRoute>
+              <Dashboard/>
+            </PrivateRoute>
+          }
         />
         
         <Route 
           path='/task/:taskId' 
-          element={<Task/>}
+          element={
+            <PrivateRoute>
+              <Task/>
+            </PrivateRoute>
+          }
         />
         
         <Route path='/contact' element={<div className='w-full flex justify-center border-2'>Contact</div>}/>
