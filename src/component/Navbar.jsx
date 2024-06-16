@@ -32,7 +32,11 @@ const Navbar = () => {
         </div>
         {token ? (
             <div className='flex gap-2'>
-                <button>Dashboard</button>            
+                <button
+                    onClick={() => navigate("/dashboard")}
+                >
+                    Dashboard
+                </button>            
                 <button
                     onClick={() => logout(dispatch, navigate)}
                 >
@@ -41,8 +45,16 @@ const Navbar = () => {
             </div>
         ): (
             <div className='flex gap-2'>
-                <button>Login</button>
-                <button>Signup</button>
+                <button
+                    onClick={() => navigate("/login")}
+                >
+                    Login
+                </button>
+                <button
+                    onClick={() => navigate("/signup")}
+                >
+                    Signup
+                </button>
             </div>
         )}
     </div>

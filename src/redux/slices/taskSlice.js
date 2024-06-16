@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     loading: false,
+    // task: null,
     tasksList: [],
 }
 
@@ -9,14 +10,17 @@ const taskSlice = createSlice({
     name: "task",
     initialState,
     reducers: {
-        setTasksList(state, action) {
-            state.tasksList.push(action.payload);
-        },
         setLoading(state, action) {
             state.loading = action.payload;
-        }
+        },
+        // setTask(state, action) {
+        //     state.task = action.payload;
+        // },
+        setTasksList(state, action) {
+            state.tasksList = action.payload;
+        },
     }
 })
 
-export const { setTasksList, setLoading } = taskSlice.actions;
+export const { setLoading, setTask, setTasksList } = taskSlice.actions;
 export default taskSlice.reducer;

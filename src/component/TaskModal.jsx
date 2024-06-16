@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { useSelector } from 'react-redux';
+import { createTask } from '../service/apiUtils/taskAPIs';
+import { useNavigate } from 'react-router-dom';
 
 const TaskModal = ({ setIsModalOpen }) => {
-    const [currTitle, setCurrTitle] = useState("");
+    const { token } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
+
+    const [title, setCurrTitle] = useState("");
     const [isCreate, setIsCreate] = useState(false);
 
     const handleChangeTitle = (e) => {
@@ -14,18 +20,21 @@ const TaskModal = ({ setIsModalOpen }) => {
         setIsCreate(false);
     }
 
-    const handleClickSave = () => {
+    const handleClickSave = async () => {
+        const result = await createTask({ title }, token);
+        navigate(`/task/${result._id}`)
         setCurrTitle("");
+        setIsModalOpen(false);
     }
 
     useEffect(() => {
-        if(currTitle.trim() !== ""){
+        if(title.trim() !== ""){
             setIsCreate(true);
         }
         else{
             setIsCreate(false);
         }
-    }, [currTitle])
+    }, [title])
 
   return (
     <div className='bg-white border-2 w-[350px] h-[200px]'>
@@ -50,7 +59,7 @@ const TaskModal = ({ setIsModalOpen }) => {
                 <label htmlFor='title'>Title</label>
                 <input
                     type='text'
-                    value={currTitle}
+                    value={title}
                     className='w-11/12 border-2'
                     placeholder='Type the task name...'
                     onChange={handleChangeTitle}

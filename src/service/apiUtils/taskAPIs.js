@@ -2,7 +2,7 @@ import toast from "react-hot-toast";
 import { apiConnect } from "../apiConnect";
 import { taskEndpoints } from "../apis";
 import { useDispatch } from "react-redux";
-import { setLoading } from "../../redux/slices/taskSlice";
+import { setLoading, setTasksList } from "../../redux/slices/taskSlice";
 
 const {
     CREATE_TASK_API,
@@ -45,10 +45,10 @@ export const getTask = async (taskId, token) => {
     const toastId = toast.loading("Loading...");
     try {
         const response = await apiConnect(
-            "GET",
+            "POST",
             GET_TASK_API,
             {
-                taskId
+                taskId,
             },
             {
                 Authorization: `Bearer ${token}`
@@ -69,7 +69,7 @@ export const getTask = async (taskId, token) => {
     return result;
 }
 
-export const getAllTasks = async (token) => {
+export const getAllTasks = async (token, dispatch) => {
     let result = [];
     const toastId = toast.loading("Loading...");
     try {
@@ -88,6 +88,7 @@ export const getAllTasks = async (token) => {
             throw new Error("Error");
         }
         result = response.data.allTasks;
+        dispatch(setTasksList(result));
     } catch (error) {
         console.log("GET ALL TASKS API Error:", error);
         toast.error("Something went wrong")
@@ -96,7 +97,7 @@ export const getAllTasks = async (token) => {
     return result;
 }
 
-export const editTask = async (data, token) => {
+export const updateTask = async (data, token, dispatch) => {
     let result = null;
     const toastId = toast.loading("Loading...");
     try {
@@ -115,7 +116,8 @@ export const editTask = async (data, token) => {
             throw new Error("Error");
         }
 
-        response = response.data.task;
+        result = response.data.task;
+        // dispatch(setTasksList(result?.data?.tasksList));
         toast.success("Task Updated");
     } catch (error) {
         console.log("EDIT TASK API ERROR:", error);
@@ -131,7 +133,7 @@ export const deleteTask = async (taskId, token) => {
         const response = await apiConnect(
             "DELETE",
             DELETE_TASK_API,
-            null,
+            {taskId},
             {
                 Authorization: `Bearer ${token}`
             }

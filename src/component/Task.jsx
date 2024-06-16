@@ -1,73 +1,99 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { CiEdit } from "react-icons/ci";
-
-const demoTask = {
-    id: 1,
-    title: "Web Development Project",
-    description: "<p>It is web dev project using MERN.It is web dev project using MERN.It is web dev project using MERN.It is web dev project using MERN.It is web dev project using MERN.</p>",
-    status: "In Progress",
-};
+import { getTask, updateTask } from '../service/apiUtils/taskAPIs';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Task = () => {
     const { taskId } = useParams();
-    const [task, setTask] = useState(demoTask);
+    const { token } = useSelector((state) => state.auth)
+    const dispatch = useDispatch();
+    
+    const navigate = useNavigate();
+    const [currTask, setCurrTask] = useState({});
 
     const [iSEditTitle, setIsEditTitle] = useState(false);
-    const [editedTitle, setEditedTitle] = useState(task.title);
-    const [editedDesc, setEditedDesc] = useState(task.description)
-    const [editedStatus, setEditedStatus] = useState(task.status);
+    const [editedTitle, setEditedTitle] = useState("");
+    const [editedDesc, setEditedDesc] = useState("")
+    const [editedStatus, setEditedStatus] = useState("");
 
     // Saving changes and keep track of chnage
     const [isUpdated, setIsUpdated] = useState(false);
 
     const handleEditTitle = (e) => {
         setEditedTitle(e.target.value);
-    }
 
-    const handleEditDescription = (value) => {
-        setEditedDesc(value);
-    }
-
-    const handleEditStatus = (e) => {
-        setEditedStatus(e.target.value);
-    }
-
-    useEffect(() => {
-        // updating state when there is any updates in value
-        if(task.title !== editedTitle 
-            || task.description !== editedDesc
-            || task.status !== editedStatus)
-        {
-            // console.log("editedTitle", editedTitle);
-            // console.log("editedDesc", editedDesc);
+        if(e.target.value.trim() !== "" && e.target.value.trim() !== currTask.title){
             setIsUpdated(true);
         }
         else{
             setIsUpdated(false);
         }
-    }, [editedTitle, editedDesc, editedStatus])
+    }
+
+    const handleEditDescription = (value) => {
+        setEditedDesc(value);
+
+        if(value.trim() !== "<p><br></p>" && value !== currTask.description){
+            setIsUpdated(true);
+        }
+        else{
+            setIsUpdated(false);
+        }
+    }
+
+    const handleEditStatus = (e) => {
+        setEditedStatus(e.target.value);
+
+        if(e.target.value.trim() !== "" && e.target.value !== currTask.status){
+            setIsUpdated(true);
+        }
+        else{
+            setIsUpdated(false);
+        }
+    }
 
 
     const handleClickCancel = () => {
         setIsEditTitle(false);
-        setEditedTitle(task.title);
-        setEditedDesc(task.description);
-        setEditedStatus(task.status);
+        setEditedTitle(currTask.title);
+        setEditedDesc(currTask.description);
+        setEditedStatus(currTask.status);
         setIsUpdated(false);
     }
 
-    const handleClickSave = () => {
-        setTask({
-            ...task,
+    const handleClickSave = async () => {
+        const updatedTask = {
+            ...currTask,
             title: editedTitle,
             description: editedDesc,
             status: editedStatus,
-        });
+        }
+        
+        const result = await updateTask({taskId, ...updatedTask}, token, dispatch);
+        if(result){
+            setCurrTask(result);
+            navigate("/dashboard");
+        }
         setIsUpdated(false);
     }
+
+    useEffect(() => {
+        const fetchTask = async () => {
+            const result = await getTask(taskId, token);
+            if(result){
+                setCurrTask(result);
+                
+                setEditedTitle(result.title);
+                setEditedDesc(result.description);
+                setEditedStatus(result.status);
+            }
+        }
+
+        fetchTask();
+    }, [])
 
   return (
     <div>
@@ -120,6 +146,7 @@ const Task = () => {
         <div className='mt-10'>
             <ReactQuill
                 value={editedDesc}
+                placeholder='Type description here...'
                 onChange={(value) => handleEditDescription(value)}
                 className='border-2'
             />
