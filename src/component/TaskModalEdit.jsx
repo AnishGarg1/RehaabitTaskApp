@@ -17,22 +17,24 @@ const TaskModalEdit = ({ taskId, setTaskModalEdit, setTaskModalEditId }) => {
     }
 
   return (
-    <div className='bg-white border-2 w-[350px] h-[200px]'>
-        <div>Do you want to delete the task?</div>
+    <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50'>
+        <div className='bg-white rounded-lg shadow-lg p-6 w-[350px] max-w-md animate-fadeIn'>
+            <div className='text-lg font-semibold mb-4'>Do you want to delete the task?</div>
 
-        <div className='flex gap-2'>
-            <button
-                className='border-2 text-white rounded-md px-2 py-1 bg-slate-700'
-                onClick={handleClickCancel}
-            >
-                Cancel
-            </button>
-            <button
-                className='border-2 text-white rounded-md px-2 py-1 bg-red-700'
-                onClick={handleClickDelete}
-            >
-                Delete
-            </button>
+            <div className='flex gap-2'>
+                <button
+                    className='flex-1 py-2 rounded-md text-white font-semibold bg-slate-700 hover:bg-slate-800 transition-colors'
+                    onClick={handleClickCancel}
+                >
+                    Cancel
+                </button>
+                <button
+                    className='flex-1 py-2 rounded-md text-white font-semibold bg-red-700 hover:bg-red-800 transition-colors'
+                    onClick={handleClickDelete}
+                >
+                    Delete
+                </button>
+            </div>
         </div>
     </div>
   )

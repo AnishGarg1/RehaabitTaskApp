@@ -12,7 +12,9 @@ import PrivateRoute from './component/Auth/PrivateRoute';
 
 function App() {
   return (
-    <div className="w-screen min-h-screen flex flex-col">
+    <div className="w-screen min-h-screen flex flex-col bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 animate-gradient-x">
+      {/* <div className="absolute inset-0 bg-black opacity-10"></div> */}
+      
       <Navbar/>
 
       <Routes>

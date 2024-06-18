@@ -96,78 +96,74 @@ const Task = () => {
     }, [])
 
   return (
-    <div>
-        <div>
-            <div className='flex justify-center items-center gap-2'>
-                {iSEditTitle ? (
-                    <div className='flex justify-center'>
-                        <input
-                            type='text'
-                            value={editedTitle}
-                            className='border-2 text-black'
-                            onChange={(e) => handleEditTitle(e)}
-                            onBlur={() => setIsEditTitle(false)}
-                            autoFocus
-                            placeholder='Type the task name here...'
-                        />
-                    </div>
-                ) : (
-                    <div className='flex justify-center'>
-                        <h1
-                            onClick={() => setIsEditTitle(true)}
-                        >
-                            {editedTitle ? editedTitle : "Type the task name..."}
-                        </h1>
-                    </div>
-                )}
-                <CiEdit onClick={() => setIsEditTitle(true)}/>
-            </div>
+    <div className='p-6 bg-white rounded-lg shadow-md max-w-4xl mx-auto mt-8 animate-fadeIn'>
+        <div className='flex justify-between items-center mb-4'>
+            {iSEditTitle ? (
+                <input
+                    type='text'
+                    value={editedTitle}
+                    className='text-2xl font-bold text-gray-800 border-b-2 border-blue-500 focus:outline-none'
+                    onChange={(e) => handleEditTitle(e)}
+                    onBlur={() => setIsEditTitle(false)}
+                    autoFocus
+                    placeholder='Type the task name here...'
+                />
+            ) : (
+                <h1
+                    className='text-2xl font-bold text-gray-800 cursor-pointer'
+                    onClick={() => setIsEditTitle(true)}
+                >
+                    {editedTitle || "Type the task name here..."}
+                </h1>
+            )}
+            <CiEdit 
+                className='text-2xl text-gray-500 cursor-pointer hover:text-gray-700 transition-all'
+                onClick={() => setIsEditTitle(true)}
+            />
+        </div>
             
-            <div>
-                <label 
-                    htmlFor='status'
-                    className='bg-blue-300 p-1'
-                >
-                    Title Status
-                </label>
-                <select 
-                    id='status'
-                    value={editedStatus}
-                    onChange={(e) => handleEditStatus(e)}
-                    className='border-2 px-2 py-1'
-                >
-                    <option value="In Progress">In Progress</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Completed">Completed</option>
-                </select>
-            </div>
+        <div className='mb-4'>
+            <label 
+                htmlFor='status'
+                className='block text-sm font-medium text-gray-600 mb-1'
+            >
+                Title Status
+            </label>
+            <select 
+                id='status'
+                value={editedStatus}
+                onChange={(e) => handleEditStatus(e)}
+                className='w-full p-2 border rounded-md focus:border-blue-500'
+            >
+                <option value="In Progress">In Progress</option>
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+            </select>
         </div>
 
-        <div className='mt-10'>
+        <div className='mb-6'>
             <ReactQuill
                 value={editedDesc}
                 placeholder='Type description here...'
                 onChange={(value) => handleEditDescription(value)}
-                className='border-2'
+                className='border rounded-md'
             />
         </div>
 
-        <div className='flex gap-2 mt-3'>
+        <div className='flex gap-2'>
             <button 
-                className={`border-2 ${isUpdated 
-                        ? "bg-green-500" 
-                        : "bg-green-300"
-                } px-2 py-1 rounded-md hover:scale-110 transition-all duration-200`}
+                className={`px-4 py-2 rounded-md font-semibold text-white transition-all duration-200 ${
+                    isUpdated ? "bg-green-500 hover:bg-green-600" : "bg-green-300 cursor-not-allowed"
+                }`}
                 disabled={!isUpdated}
                 onClick={handleClickCancel}
             >
                 Cancel
             </button>
             <button 
-                className={`border-2 ${isUpdated 
-                        ? "bg-green-500" 
-                        : "bg-green-300"
-                } px-2 py-1 rounded-md hover:scale-110 transition-all duration-200`}
+                className={`px-4 py-2 rounded-md font-semibold text-white transition-all duration-200 ${
+                    isUpdated ? "bg-blue-500 hover:bg-blue-600" : "bg-blue-300 cursor-not-allowed"
+                }`}
                 disabled={!isUpdated}
                 onClick={handleClickSave}
             >

@@ -37,14 +37,12 @@ const TaskModal = ({ setIsModalOpen }) => {
     }, [title])
 
   return (
-    <div className='bg-white border-2 w-[350px] h-[200px]'>
-        <div className='w-11/12 mx-auto flex items-center'>
-            <div className='w-11/12 border-2'>
-                <p>Create Task</p>
-            </div>
-            <div className='w-1/12 border-2'>
+    <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50'>
+        <div className='bg-white rounded-lg shadow-lg p-6 w-[350px] max-w-md animate-fadeIn'>
+            <div className='flex justify-between items-center mb-4'>
+                <h2 className='text-xl font-semibold'>Create Task</h2>
                 <IoIosCloseCircleOutline
-                    className='cursor-pointer' 
+                    className='cursor-pointer text-2xl text-gray-500 hover:text-red-600 transition-colors' 
                     onClick={() => {
                         setIsCreate(false);
                         setCurrTitle("");
@@ -52,27 +50,27 @@ const TaskModal = ({ setIsModalOpen }) => {
                     }}
                 />
             </div>
-
-        </div>
-        <div>
-            <div>
-                <label htmlFor='title'>Title</label>
+            <div className='mb-4'>
+                <label 
+                    htmlFor='title'
+                    className='block text-sm font-medium text-gray-700'
+                >
+                    Title
+                </label>
                 <input
                     type='text'
                     value={title}
-                    className='w-11/12 border-2'
+                    className='mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
                     placeholder='Type the task name...'
                     onChange={handleChangeTitle}
                     autoFocus
                 />
             </div>
 
-            <div className='flex gap-2 mt-2'>
+            <div className='flex gap-2'>
                 <button
-                    className={`text-sky-950 rounded-md px-2 py-1 ${
-                        isCreate 
-                        ? "bg-green-600" 
-                        : "bg-green-300 cursor-not-allowed"}`
+                    className={`flex-1 py-2 rounded-md text-white font-semibold transition-all ${
+                        isCreate ? "bg-red-500 hover:bg-red-600" : "bg-gray-800 bg-opacity-50 cursor-not-allowed"}`
                     }
                     onClick={handleClickCancel}
                     disabled={!isCreate}
@@ -80,12 +78,11 @@ const TaskModal = ({ setIsModalOpen }) => {
                     Cancel
                 </button>
                 <button
-                    className={`text-sky-950 rounded-md px-2 py-1 ${
-                        isCreate 
-                        ? "bg-green-600" 
-                        : "bg-green-300 cursor-not-allowed"}`
+                    className={`flex-1 py-2 rounded-md text-white font-semibold transition-all ${
+                        isCreate ? "bg-green-500 hover:bg-green-600" : "bg-gray-800 bg-opacity-50 cursor-not-allowed"}`
                     }
                     onClick={handleClickSave}
+                    disabled={!isCreate}
                 >
                     Create
                 </button>

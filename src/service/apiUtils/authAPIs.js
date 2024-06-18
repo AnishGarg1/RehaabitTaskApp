@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { setToken } from "../../redux/slices/authSlice";
+import { setToken, setUser } from "../../redux/slices/authSlice";
 import { setTasksList } from "../../redux/slices/taskSlice";
 import { apiConnect } from "../apiConnect";
 import { authEndpoints } from "../apis";
@@ -58,7 +58,9 @@ export const login = async (email, password, dispatch, navigate) => {
             throw new Error("Error");
         }
         dispatch(setToken(response.data.token));
+        dispatch(setUser(response.data.user));
         localStorage.setItem("token", JSON.stringify(response.data.token));
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         toast.success("Login Successful");
         navigate("/dashboard");
     } catch (error) {
