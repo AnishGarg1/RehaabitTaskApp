@@ -15,7 +15,6 @@ const Signup = () => {
     confirmPassword: "",
   });
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [isPassMatch, setIsPassMatch] = useState(false);
