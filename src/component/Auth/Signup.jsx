@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { FaRegCheckCircle } from "react-icons/fa";
 import { signup } from '../../service/apiUtils/authAPIs';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
