@@ -28,7 +28,7 @@ app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/task", taskRoutes);
 
 app.get("/", (req, res) => {
-    res.send("Hello, Rehaabit Task App");
+    res.send("Rehaabit Task App");
 })
 
 app.listen(port, () => {
