@@ -9,7 +9,7 @@ const {
     LOGIN_API,
 } = authEndpoints;
 
-export const signup = async (username, firstName, lastName, email, password, dispatch, navigate) => {
+export const signup = async (username, firstName, lastName, email, password, navigate) => {
     let result = null;
     const toastId = toast.loading("Loading...");
     try {

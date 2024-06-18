@@ -4,7 +4,6 @@ import { FiEdit2 } from "react-icons/fi";
 import { Link, useNavigate } from 'react-router-dom';
 import { getAllTasks } from '../service/apiUtils/taskAPIs';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTasksList } from '../redux/slices/taskSlice';
 import TaskModalEdit from './TaskModalEdit';
 
 const Tasks = () => {
