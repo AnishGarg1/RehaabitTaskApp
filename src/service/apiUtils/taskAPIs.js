@@ -1,8 +1,7 @@
 import toast from "react-hot-toast";
 import { apiConnect } from "../apiConnect";
 import { taskEndpoints } from "../apis";
-import { useDispatch } from "react-redux";
-import { setLoading, setTasksList } from "../../redux/slices/taskSlice";
+import { setTasksList } from "../../redux/slices/taskSlice";
 
 const {
     CREATE_TASK_API,

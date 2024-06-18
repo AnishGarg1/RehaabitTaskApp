@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../service/apiUtils/authAPIs'
 
 const Navbar = () => {
-    const { token, isOpenModal } = useSelector((state) => state.auth);
+    const { token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

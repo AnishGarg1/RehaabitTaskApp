@@ -93,7 +93,7 @@ const Task = () => {
         }
 
         fetchTask();
-    }, [])
+    }, [taskId, token])
 
   return (
     <div className='p-6 bg-white rounded-lg shadow-md max-w-4xl mx-auto mt-8 animate-fadeIn'>

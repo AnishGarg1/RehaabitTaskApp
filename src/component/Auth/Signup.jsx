@@ -36,13 +36,12 @@ const Signup = () => {
       toast.error("Password do not match");
       return;
     }
-    const result = await signup(
+    await signup(
       username,
       firstName,
       lastName,
       email,
       password,
-      dispatch,
       navigate,
     );
   }
@@ -54,7 +53,7 @@ const Signup = () => {
     else{
       setIsPassMatch(false);
     }
-  }, [formData])
+  }, [password, confirmPassword])
 
   return (
     <div>

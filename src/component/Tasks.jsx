@@ -48,7 +48,7 @@ const Tasks = () => {
     }
     
     fetchTaskList();
-  }, [taskModalEditId]);
+  }, [dispatch, token, taskModalEditId]);
 
   const stripHtmlTags = (html) => {
     return html.replace(/<[^>]*>?/gm, '');
