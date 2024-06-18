@@ -17,7 +17,7 @@ dotenv.config(); // parsing .env file variables
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://rehaabit-task.netlify.app/",
     credentials: true,
 }));
 
