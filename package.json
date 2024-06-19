@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "server": "cd ./server/api && npm run dev",
+    "server": "cd ./server && npm run dev",
     "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"npm run start\" \"npm run server\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
